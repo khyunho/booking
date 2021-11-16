@@ -69,6 +69,19 @@
                     	<jsp:include page="seatImage.jsp" flush = "false"></jsp:include>
                     	
                     </p>
+                    <div style="text-align:center;">
+						<hr>
+						<form action = "bookingAction.jsp">
+							<!-- 여기서 seat1 값을 액션에 넘겨야한다 
+							 
+							-->
+							<button name = "seat1" value = "0">좌석1 예약 완료 하기</button>
+						</form>
+						<form action = "bookingDelete.jsp">
+							<!-- 여기서 seat1 값을 액션에 넘겨야한다 -->
+							<button name = "seat1" value = "1">좌석1 예약 취소</button>
+						</form>
+					</div>
                 </div>
             </div>
 		</div>

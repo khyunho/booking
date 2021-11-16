@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter"%>
+<%@ page import = "user.UserDAO" %>
+<% request.setCharacterEncoding("UTF-8"); %>
+<jsp:useBean id = "user" class = "user.User" scope = "page" />
+<jsp:setProperty name = "user" property = "userID" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +18,9 @@
 	<link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
+<%
+	String userID = (String) session.getAttribute("userID");
+%>
 <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
@@ -39,10 +45,10 @@
                                 <li class="nav-item active"><a class="nav-link" href="logoutAction.jsp">로그아웃</a></li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" 
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=userID %>님</a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">예약현황(로그인했다면)</a>
-                                        <a class="dropdown-item" href="#!">(내정보)</a>
+                                        <a class="dropdown-item" href="#!">예약현황</a>
+                                        <a class="dropdown-item" href="#!">내정보</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#!"></a>
                                     </div>
@@ -53,7 +59,28 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <jsp:include page="bookingAction.jsp" flush = "false"></jsp:include>
+                    <h1 class="mt-4">예약</h1>
+                    <p>
+                    	<!-- 이부분 jsp 따로 만들기 div설정해서 네모 영역 고정 설정 후
+                    		 그림 1~5까지 나눠서 설정
+                    		 seat1~5까지 그림 따로 나눠서만들면 경우의 수가 줄어든다
+                             ex)seat1과 3이 차있을때 seat1과 3만 색 들어오게 설정  -->
+                    	
+                    	<jsp:include page="seatImage.jsp" flush = "false"></jsp:include>
+                    	
+                    </p>
+                    <div style="text-align:center;">
+						<hr>
+
+							<!-- 이걸 누르면 seat1번에 아이디 저장하게 파라미터 넘기기 setpara~ 지금 아이디값 넘기고 
+							 넘긴값을 디비seat에 seat1번에 넣고 예약완료.
+							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)-->
+							<button onclick="location.href='bookingSeat1.jsp'">좌석1 예약</button>
+							<!-- 이걸 누르면 seat1번에 아이디 저장하게 파라미터 넘기기 setpara~ 지금 아이디값 넘기고 
+							 넘긴값을 디비seat에 seat1번에 넣고 예약완료.
+							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)-->
+							<button onclick="location.href='bookingSeat2.jsp'">좌석2 예약</button>
+					</div>
                 </div>
             </div>
 		</div>

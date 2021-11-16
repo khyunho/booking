@@ -35,8 +35,7 @@
 				</form>
 			</div>
 		</div>
-		<div class = "col-lg-4"></div>
-		
+		<div class = "col-lg-4"></div>	
 	</div>
 	
 	<!-- Bootstrap core JS-->
