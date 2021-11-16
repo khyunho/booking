@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "user.UserDAO" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id = "user" class = "user.User" scope = "page" />
-<jsp:setProperty name = "user" property = "userID" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +10,7 @@
 <body>
 <%
 	String userID = (String) session.getAttribute("userID");
+	String userCheck = (String) session.getAttribute("userCheck");
 %>
 <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
@@ -20,8 +18,21 @@
                 <div class="sidebar-heading border-bottom bg-light">프로젝트</div>
                 <div class="list-group list-group-flush">
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="main.jsp">HOME</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="seat.jsp">좌석보기</a>
+                    
+           			<%
+           				if (userCheck == null){
+           			%>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="seat.jsp">좌석보기</a>                
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="booking.jsp">예약하기</a>
+                    <%
+           				} else {
+                    %>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">좌석보기</a>                
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">예약하기</a>
+                	<%
+           				}
+                	%>
+                
                 </div>
             </div>
             <!-- Page content wrapper-->

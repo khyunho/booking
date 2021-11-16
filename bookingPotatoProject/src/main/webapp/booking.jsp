@@ -65,7 +65,6 @@
                     		 그림 1~5까지 나눠서 설정
                     		 seat1~5까지 그림 따로 나눠서만들면 경우의 수가 줄어든다
                              ex)seat1과 3이 차있을때 seat1과 3만 색 들어오게 설정  -->
-                    	
                     	<jsp:include page="seatImage.jsp" flush = "false"></jsp:include>
                     	
                     </p>
@@ -78,8 +77,10 @@
 							<button onclick="location.href='bookingSeat1.jsp'">좌석1 예약</button>
 							<!-- 이걸 누르면 seat1번에 아이디 저장하게 파라미터 넘기기 setpara~ 지금 아이디값 넘기고 
 							 넘긴값을 디비seat에 seat1번에 넣고 예약완료.
-							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)-->
-							<button onclick="location.href='bookingSeat2.jsp'">좌석2 예약</button>
+							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)
+							 <button onclick="location.href='bookingSeat2.jsp'">좌석2 예약</button>
+							 -->
+							
 					</div>
                 </div>
             </div>

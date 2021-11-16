@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ page import = "user.UserDAO" %>
-<% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id = "user" class = "user.User" scope = "page" />
-<jsp:setProperty name = "user" property = "userID" />
+<%@ page import = "java.io.PrintWriter" %>
 
 <!DOCTYPE html>
 <html>
@@ -16,10 +14,11 @@
 <%
 	String name = (String) session.getAttribute("userID");
 	String action = request.getParameter("seat1");
-
+	String userCheck = (String) session.getAttribute("userCheck");
+	
 	Connection conn = null;
 	PreparedStatement pstmt = null;
-
+	
 	try {
 		String dbURL = "jdbc:mysql://localhost:3306/BK";
 		String dbID = "root";
@@ -29,21 +28,51 @@
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
-	
-	String sql = "INSERT INTO seat1(name) VALUES (?)";
-	pstmt = conn.prepareStatement(sql);
-	pstmt.setString(1, name);
-	pstmt.executeUpdate();
-	pstmt.close();
-	conn.close();
-	%>
-		
-	<script>
-	alert("예약완료");
-	location.href = 'main.jsp';
-	</script>
-	
-	
 
+	if(Integer.parseInt(action) == 0){
+		String SQL = "UPDATE user SET userCheck = ? WHERE userID = ?";
+		pstmt = conn.prepareStatement(SQL);
+		pstmt.setString(1, name);
+		pstmt.setString(2, name);
+		pstmt.executeUpdate();
+		String sql = "UPDATE seat1 SET name = ?";
+		pstmt = conn.prepareStatement(sql);	
+		pstmt.setString(1, name);
+		pstmt.executeUpdate();
+		pstmt.close();
+		conn.close();
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('예약되었습니다.')");
+		script.println("location.href = 'seat.jsp'");
+		script.println("</script>");
+		
+	} else if (Integer.parseInt(action) == 1){
+		String SQL = "UPDATE user SET userCheck = ? WHERE userID = ?";
+		pstmt = conn.prepareStatement(SQL);
+		pstmt.setString(1, null);
+		pstmt.setString(2, name);
+		pstmt.executeUpdate();
+		String sql = "UPDATE seat1 SET name = ?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, null);
+		pstmt.executeUpdate();
+		pstmt.close();
+		conn.close();
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('예약을 취소하셨습니다.')");
+		script.println("location.href = 'seat.jsp'");
+		script.println("</script>");
+		
+	} else {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('이미 예약된 좌석입니다.')");
+		script.println("location.href = 'seat.jsp'");
+		script.println("</script>");
+	}
+
+%>
 </body>
 </html>

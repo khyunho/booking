@@ -65,7 +65,6 @@
                     		 그림 1~5까지 나눠서 설정
                     		 seat1~5까지 그림 따로 나눠서만들면 경우의 수가 줄어든다
                              ex)seat1과 3이 차있을때 seat1과 3만 색 들어오게 설정  -->
-                    	
                     	<jsp:include page="seatImage.jsp" flush = "false"></jsp:include>
                     	
                     </p>
