@@ -55,7 +55,7 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">예약</h1>
+                    <h1 class="mt-4">리뷰</h1>
                     <p style = "text-align : center;">
                     	<!-- 이부분 jsp 따로 만들기 div설정해서 네모 영역 고정 설정 후
                     		 그림 1~5까지 나눠서 설정
@@ -66,18 +66,26 @@
                     </p>
                     <div style="text-align:center;">
 						<hr>
-
-							<!-- 이걸 누르면 seat1번에 아이디 저장하게 파라미터 넘기기 setpara~ 지금 아이디값 넘기고 
-							 넘긴값을 디비seat에 seat1번에 넣고 예약완료.
-							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)-->
-							<button onclick="location.href='bookingSeat1.jsp'">좌석1 예약</button>
-							<!-- 이걸 누르면 seat1번에 아이디 저장하게 파라미터 넘기기 setpara~ 지금 아이디값 넘기고 
-							 넘긴값을 디비seat에 seat1번에 넣고 예약완료.
-							 seat디비 중 값이 있는곳은 예약시도하려하면 예약불가(값이 있을때 예약완료 표시)
-							 <button onclick="location.href='bookingSeat2.jsp'">좌석2 예약</button>
-							 -->
-							 <button onclick="location.href='bookingSeat2.jsp'">좌석2 예약</button>
-							
+						<div class = "container">
+							<form method = "post" action = "reviewWriteAction.jsp">
+								<table class = "table table-strped" style = "text-align : center; obrder : 1px solid #dddddd">
+									<thead>
+										<tr>
+											<th colspan = "2" style = "background-color : #eeeeee; text-align : center;">게시판 글쓰기 양식</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type = "text" class = "form-control" placeholder = "글 제목" name = "boardTitle" maxlength = "50"></td>
+										</tr>
+										<tr>	
+											<td><textarea class = "form-control" placeholder = "글 내용" name = "boardContent" maxlength = "2048" style = "height : 350px;"></textarea></td>
+										</tr>
+									</tbody>
+								</table>
+								<input type = "submit" class = "btn btn-primary pull-right" value = "글쓰기">
+							</form>
+						</div>
 					</div>
                 </div>
             </div>

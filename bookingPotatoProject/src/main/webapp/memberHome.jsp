@@ -16,24 +16,7 @@
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">프로젝트</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="main.jsp">HOME</a>
-                    
-           			<%
-           				if (userCheck == null){
-           			%>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="seat.jsp">좌석보기</a>                
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="booking.jsp">예약하기</a>
-                    <%
-           				} else {
-                    %>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">좌석보기</a>                
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#">예약하기</a>
-                	<%
-           				}
-                	%>
-                
-                </div>
+                <jsp:include page="menu.jsp" flush = "false"></jsp:include>
             </div>
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">

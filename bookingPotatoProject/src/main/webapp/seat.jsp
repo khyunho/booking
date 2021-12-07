@@ -25,11 +25,7 @@
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light">프로젝트</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="main.jsp">HOME</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="seat.jsp">좌석보기</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="booking.jsp">예약하기</a>
-                </div>
+                <jsp:include page="menu.jsp" flush = "false"></jsp:include>
             </div>
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
@@ -59,8 +55,8 @@
                 </nav>
                 <!-- Page content-->
                 <div class="container-fluid">
-                    <h1 class="mt-4">예약</h1>
-                    <p>
+                    <h1 class="mt-4">현재 좌석</h1>
+                    <p style = "text-align : center;">
                     	<!-- 이부분 jsp 따로 만들기 div설정해서 네모 영역 고정 설정 후
                     		 그림 1~5까지 나눠서 설정
                     		 seat1~5까지 그림 따로 나눠서만들면 경우의 수가 줄어든다
