@@ -6,7 +6,14 @@ public class Board {
 	private String userID;
 	private String boardDate;
 	private String boardContent;
+	private int boardAvailable;
 	
+	public int getBoardAvailable() {
+		return boardAvailable;
+	}
+	public void setBoardAvailable(int boardAvailable) {
+		this.boardAvailable = boardAvailable;
+	}
 	public int getBoardID() {
 		return boardID;
 	}

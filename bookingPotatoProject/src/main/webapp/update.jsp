@@ -1,9 +1,10 @@
+<%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %>
-<%@ page import="board.BoardDAO" %>
-<%@ page import="board.Board" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ page import = "board.Board" %>
+<%@ page import = "board.BoardDAO" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +17,6 @@
 	<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 	<!-- Core theme CSS (includes Bootstrap)-->
 	<link href="css/styles.css" rel="stylesheet" />
-	<style type = "text/css">
-		a, a:hover{
-			color: #000000;
-			text-decoration: none;
-		}
-	</style>
 </head>
 <body>
 <%
@@ -29,9 +24,31 @@
 	if(session.getAttribute("userID") != null){
 		userID = (String) session.getAttribute("userID");
 	}
-	int pageNumber = 1;
-	if (request.getParameter("pageNumber") != null) {
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	if (userID == null) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인을 하세요.')");
+		script.println("location.href = 'login.jsp'");
+		script.println("</script>");
+	}
+	int boardID = 0;
+	if (request.getParameter("boardID") != null) {
+		boardID = Integer.parseInt(request.getParameter("boardID"));
+	}
+	if (boardID == 0) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글입니다.')");
+		script.println("location.href = 'reviewSeat1.jsp'");
+		script.println("</script>");
+	}
+	Board board = new BoardDAO().getBoard(boardID);
+	if (!userID.equals(board.getUserID())) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('권한이 없습니다.')");
+		script.println("location.href = 'reviewSeat1.jsp'");
+		script.println("</script>");
 	}
 %>
 <div class="d-flex" id="wrapper">
@@ -80,44 +97,24 @@
                     <div style="text-align:center;">
 						<hr>
 						<div class = "container">
-							<table class = "table table-strped" style = "text-align : center; obrder : 1px solid %dddddd">
-								<thead>
-									<tr>
-										<th style = "background-color : #eeeeee; text-align : center;">번호</th>
-										<th style = "background-color : #eeeeee; text-align : center;">제목</th>
-										<th style = "background-color : #eeeeee; text-align : center;">작성자</th>
-										<th style = "background-color : #eeeeee; text-align : center;">작성일</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%
-										BoardDAO boardDAO = new BoardDAO();
-										ArrayList<Board> list = boardDAO.getList(pageNumber);
-										for(int i = 0; i < list.size(); i++){
-									%>
-									<tr>
-										<td><%= list.get(i).getBoardID() %></td>
-										<td><a href="reviewSeat1View.jsp?boardID=<%= list.get(i).getBoardID() %>"><%= list.get(i).getBoardTitle() %></a></td>
-										<td><%= list.get(i).getUserID() %></td>
-										<td><%= list.get(i).getBoardDate().substring(0,11) + list.get(i).getBoardDate().substring(11, 13) + "시" + list.get(i).getBoardDate().substring(14, 16) + "분" %></td>
-									</tr>
-									<%
-										}
-									%>
-								</tbody>
-							</table>
-							<%
-								if(pageNumber != 1) {
-							%>
-								<a href = "reviewSeat1.jsp?pageNumber=<%=pageNumber - 1%>" class="btn btn-success btn-arraw-left">이전</a>
-							<%
-								} if(boardDAO.nextPage(pageNumber)) {
-							%>
-								<a href = "reviewSeat1.jsp?pageNumber=<%=pageNumber + 1%>" class="btn btn-success btn-arraw-left">다음</a>
-							<%
-								}
-							%>
-							<a href = "reviewWrite.jsp" class = "btn btn-primary pull-right">글쓰기</a>
+							<form method = "post" action = "updateAction.jsp?boardID=<%=boardID %>">
+								<table class = "table table-strped" style = "text-align : center; obrder : 1px solid #dddddd">
+									<thead>
+										<tr>
+											<th colspan = "2" style = "background-color : #eeeeee; text-align : center;">게시판 글 수정 양식</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type = "text" class = "form-control" placeholder = "글 제목" name = "boardTitle" maxlength = "50" value="<%= board.getBoardTitle() %>"></td>
+										</tr>
+										<tr>	
+											<td><textarea class = "form-control" placeholder = "글 내용" name = "boardContent" maxlength = "2048" style = "height : 350px;"><%= board.getBoardContent() %></textarea></td>
+										</tr>
+									</tbody>
+								</table>
+								<input type = "submit" class = "btn btn-primary pull-right" value = "글수정">
+							</form>
 						</div>
 					</div>
                 </div>

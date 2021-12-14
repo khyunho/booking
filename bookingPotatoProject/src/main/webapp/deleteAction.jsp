@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "board.BoardDAO" %>
+<%@ page import = "board.Board" %>
 <%@ page import = "java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id = "board" class = "board.Board" scope = "page" />
-<jsp:setProperty name = "board" property = "boardTitle" />
-<jsp:setProperty name = "board" property = "boardContent" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +16,32 @@
 		if(session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
 		}
-		if (board.getBoardTitle() == null || board.getBoardContent() == null) {
+		
+		int boardID = 0;
+		if (request.getParameter("boardID") != null) {
+			boardID = Integer.parseInt(request.getParameter("boardID"));
+		}
+		if (boardID == 0) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('입력이 안 된 사항이 있습니다.')");
-			script.println("history.back()");
+			script.println("alert('유효하지 않은 글입니다.')");
+			script.println("location.href = 'reviewSeat1.jsp'");
 			script.println("</script>");
-		} else{
+		}
+		Board board = new BoardDAO().getBoard(boardID);
+		if (!userID.equals(board.getUserID())) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href = 'reviewSeat1.jsp'");
+			script.println("</script>");
+		} else {
 			BoardDAO boardDAO = new BoardDAO();
-			int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
+			int result = boardDAO.delete(boardID);
 			if (result == -1){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('오류')");
+				script.println("alert('글 삭제에 실패했습니다.')");
 				script.println("history.back()");
 				script.println("</script>");
 			}
@@ -40,7 +51,7 @@
 				script.println("location.href = 'review.jsp'");
 				script.println("</script>");
 			}
-		}			
+		}
 	%>
 </body>
 </html>

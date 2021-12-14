@@ -25,7 +25,7 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword FROM USER  WHERE userID = ?"; //해킹방지용
+		String SQL = "SELECT userPassword FROM USER WHERE userID = ?"; //해킹방지용
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID); //해킹방지용
